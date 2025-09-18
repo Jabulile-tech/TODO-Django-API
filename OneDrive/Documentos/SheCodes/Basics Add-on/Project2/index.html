@@ -1,0 +1,323 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Documentary Landing Page</title>
+    <style>
+      :root {
+        --bg-light: linear-gradient(135deg, #f8fafc 0%, #e2e8f0 100%);
+        --bg-dark: linear-gradient(135deg, #1e293b 0%, #07090c 100%);
+        --text-light: #1e293b;
+        --text-dark: #f8fafc;
+        --accent: #38bdf8;
+      }
+      body {
+        margin: 0;
+        font-family: "Segoe UI", Arial, sans-serif;
+        background: var(--bg-light);
+        color: var(--text-light);
+        transition: background 0.5s, color 0.5s;
+      }
+      body.dark {
+        background: var(--bg-dark);
+        color: var(--text-dark);
+      }
+      .theme-toggle {
+        position: absolute;
+        top: 1rem;
+        right: 1rem;
+        background: var(--accent);
+        color: #fff;
+        border: none;
+        padding: 0.5rem 1rem;
+        border-radius: 20px;
+        cursor: pointer;
+        font-size: 1rem;
+        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+        transition: transform 0.2s;
+      }
+      .theme-toggle:hover {
+        transform: scale(1.1) rotate(-5deg);
+      }
+      header {
+        text-align: center;
+        padding: 3rem 1rem 1rem 1rem;
+        background: rgba(56, 189, 248, 0.1);
+        border-bottom: 2px solid var(--accent);
+        transform: (-2deg);
+      }
+      header h1 {
+        font-size: 2.5rem;
+        margin: 0;
+        letter-spacing: 2px;
+        text-shadow: 2px 2px 8px rgba(56, 189, 248, 0.2);
+      }
+      .header-image {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        margin: 1.5rem 0;
+      }
+      .header-image img {
+        width: 100%;
+        max-width: 400px;
+        height: 180px;
+        object-fit: cover;
+        border-radius: 16px;
+        border-bottom: 2px solid var(--accent);
+        box-shadow: 0 4px 16px rgba(56, 189, 248, 0.12);
+        display: block;
+      }
+      .grid-gallery {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+        gap: 1.5rem;
+        padding: 2rem;
+        max-width: 1200px;
+        margin: 2rem auto;
+      }
+      .photo-card {
+        background: rgba(56, 189, 248, 0.08);
+        border-radius: 16px;
+        overflow: hidden;
+        box-shadow: 0 4px 16px rgba(56, 189, 248, 0.12);
+        transition: transform 0.3s, box-shadow 0.3s;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+      }
+      .photo-card:hover {
+        transform: scale(1.05) rotate(-2deg);
+        box-shadow: 0 8px 32px rgba(56, 189, 248, 0.18);
+      }
+      .photo-card img {
+        width: 100%;
+        height: 180px;
+        object-fit: cover;
+        border-bottom: 2px solid var(--accent);
+        filter: brightness(0.95) contrast(1.1);
+        transition: filter 0.3s;
+      }
+      .photo-card:hover img {
+        filter: brightness(1.1) contrast(1.2) drop-shadow(0 0 8px var(--accent));
+      }
+      .photo-card .caption {
+        padding: 1rem;
+        font-size: 1.1rem;
+        text-align: center;
+      }
+      .grid-gallery2 {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+        gap: 2rem;
+        padding: 2rem;
+        max-width: 900px;
+        margin: 2rem auto;
+        background: rgba(56, 189, 248, 0.07);
+        border-radius: 18px;
+        box-shadow: 0 2px 12px rgba(56, 189, 248, 0.1);
+      }
+      .grid-gallery2 .photo-card {
+        background: rgba(56, 189, 248, 0.12);
+        border-radius: 18px;
+        box-shadow: 0 4px 18px rgba(56, 189, 248, 0.15);
+        padding-bottom: 1rem;
+      }
+      .grid-gallery2 .photo-card img {
+        max-width: 320px;
+        height: 220px;
+        margin: 0 auto;
+        display: block;
+        border-radius: 14px;
+        border-bottom: 2px solid var(--accent);
+        object-fit: cover;
+      }
+      .grid-gallery2 .caption {
+        font-weight: bold;
+        color: var(--accent);
+        font-size: 1.2rem;
+        margin-top: 0.5rem;
+      }
+      footer {
+        text-align: center;
+        padding: 1.5rem 0 1rem 0;
+        font-size: 1rem;
+        color: var(--accent);
+        background: rgba(56, 189, 248, 0.05);
+        border-top: 2px solid var(--accent);
+        margin-top: 2rem;
+        letter-spacing: 1px;
+      }
+      .highlight-btn {
+        display: inline-block;
+        background: linear-gradient(90deg, #38bdf8 0%, #0ea5e9 100%);
+        color: #fff;
+        font-weight: bold;
+        padding: 0.75rem 2rem;
+        border: none;
+        border-radius: 30px;
+        font-size: 1.1rem;
+        text-decoration: none;
+        box-shadow: 0 2px 10px rgba(56, 189, 248, 0.15);
+        margin: 1.5rem auto;
+        transition: background 0.3s, transform 0.2s, box-shadow 0.2s;
+        cursor: pointer;
+      }
+      .highlight-btn:hover {
+        background: linear-gradient(90deg, #0ea5e9 0%, #38bdf8 100%);
+        transform: scale(1.07) rotate(-2deg);
+        box-shadow: 0 6px 24px rgba(56, 189, 248, 0.22);
+        color: #fff;
+        text-shadow: 0 2px 8px rgba(56, 189, 248, 0.18);
+      }
+      .video-link-btn {
+        display: block;
+        width: fit-content;
+        margin: 0.5rem auto 2rem auto;
+        background: linear-gradient(90deg, #0ea5e9 0%, #38bdf8 100%);
+        color: #fff;
+        font-weight: bold;
+        padding: 0.7rem 1.7rem;
+        border-radius: 24px;
+        font-size: 1.05rem;
+        text-decoration: none;
+        box-shadow: 0 2px 8px rgba(56, 189, 248, 0.13);
+        transition: background 0.3s, transform 0.2s, box-shadow 0.2s;
+      }
+      .video-link-btn:hover {
+        background: linear-gradient(90deg, #38bdf8 0%, #0ea5e9 100%);
+        transform: scale(1.06) rotate(-1deg);
+        box-shadow: 0 6px 18px rgba(56, 189, 248, 0.18);
+        color: #fff;
+      }
+    </style>
+  </head>
+  <body>
+    <button class="theme-toggle" onclick="toggleTheme()">Dark Theme</button>
+    <header>
+      <h1>Documentary Buff</h1>
+      <div class="header-image">
+        <img
+          src="https://s3.amazonaws.com/shecodesio-production/uploads/files/000/173/875/original/AAAAQcXM7PFjuORfhfE5xIlzb1JT0qTjQxGJwu7Luuz_FFnHrJHmwQi3iZBiPqYyfZvfJzLAMC2PC7Dx3owWfof7VyUOSEYDC6RCCHbXJ2T2Xq8JOGm13GEmdg64Krqch1nV4x7gIqzLSgGwCUcukw.jpg?1758138517"
+          alt="Documentary"
+        />
+      </div>
+
+      <h2>What is a Documentary Buff</h2>
+      <p>
+        A documentary buff is someone who has a deep appreciation for
+        documentary films, often seeking out a wide variety of topics and
+        styles. They enjoy exploring real-life stories, social issues, and the
+        art of storytelling through non-fiction cinema.
+      </p>
+      <a
+        href="https://people.com/movies/best-true-crime-documentaries-to-stream"
+        class="highlight-btn"
+        >AND THAT'S ME!</a
+      >
+    </header>
+    <h2>
+      Let me walk you through the different types of documentaries I love:
+    </h2>
+    <section class="grid-gallery">
+      <div class="photo-card">
+        <img
+          src="https://s3.amazonaws.com/shecodesio-production/uploads/files/000/173/868/original/hq720_%282%29.jpg?1758134840"
+          alt="Nature"
+        />
+        <div class="caption"><strong>True Crime Documentaries</strong></div>
+        <p>
+          These films explore the intricacies of real criminal cases, often
+          featuring in-depth interviews, archival footage, and expert analysis.
+        </p>
+      </div>
+      <div class="photo-card">
+        <img
+          src="https://s3.amazonaws.com/shecodesio-production/uploads/files/000/173/872/original/hq720_%286%29.jpg?1758135117"
+          alt="City"
+        />
+        <div class="caption"><strong>Cultural Documentaries</strong></div>
+        <p>
+          I appreciate documentaries that explore different cultures and
+          traditions from around the world.
+        </p>
+      </div>
+      <div class="photo-card">
+        <img
+          src="https://s3.amazonaws.com/shecodesio-production/uploads/files/000/173/871/original/hq720_%284%29.jpg?1758135022"
+          alt="Portrait"
+        />
+        <div class="caption"><strong>Historical Documentaries</strong></div>
+        <p>
+          I enjoy delving into the past through documentaries that examine
+          significant events, figures, and movements that have shaped our world.
+        </p>
+      </div>
+      <div class="photo-card">
+        <img
+          src="https://s3.amazonaws.com/shecodesio-production/uploads/files/000/173/869/original/hq720_%283%29.jpg?1758134894"
+          alt="Wildlife"
+        />
+        <div class="caption">
+          <strong>Social Commentary Documentaries</strong>
+        </div>
+        <p>
+          These films tackle pressing social issues, raising awareness and
+          prompting discussions about topics such as inequality, climate change,
+          and human rights.
+        </p>
+      </div>
+    </section>
+    <h2>Some of my favourites</h2>
+    <section class="grid-gallery2">
+      <div class="photo-card">
+        <img
+          src="https://s3.amazonaws.com/shecodesio-production/uploads/files/000/173/876/original/p22931799_b_v13_aa-675x900.jpg?1758140453"
+          alt="Nature"
+        />
+        <div class="caption">Jeffery Dahmer:</div>
+        <p>
+          A chilling exploration of the infamous serial killer's life and
+          crimes.
+        </p>
+        <p>Dahmer - Monster: The Jeffrey Dahmer Story (2022)</p>
+      </div>
+      <div class="photo-card">
+        <img
+          src="https://s3.amazonaws.com/shecodesio-production/uploads/files/000/173/877/original/p31138677_b_v9_aa.jpg?1758140593"
+          alt="City"
+        />
+        <div class="caption">Thabo Bester & Dr Nandipha:</div>
+        <p>
+          An in-depth look at the controversial figures and their impact on
+          society.
+        </p>
+        <p>The Great Escape of Thabo Bester (2023)</p>
+        <p>Dr Nandipha: The Woman Who Dared (2023)</p>
+      </div>
+      <div class="most-popular-row">
+        <h3 class="most-popular">Most Popular:</h3>
+        <a
+          href="https://youtu.be/DEa5hfcZyWo?si=7nveMlWCBmkU6YRJ"
+          class="video-link-btn"
+          target="_blank"
+          >Watch Full Documentary</a
+        >
+      </div>
+      <p>
+        <i>
+          "Documentaries are a window to reality, showing us the world as it
+          is."
+        </i>
+      </p>
+    </section>
+
+    <footer>Coded by Jabulile Gamede</footer>
+    <script>
+      function toggleTheme() {
+        document.body.classList.toggle("dark");
+      }
+    </script>
+  </body>
+</html>
