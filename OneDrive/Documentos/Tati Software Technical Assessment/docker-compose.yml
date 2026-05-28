@@ -1,0 +1,47 @@
+version: "3.8"
+
+services:
+  web:
+    build: .
+    container_name: todo_api_web
+    command: sh -c "python manage.py migrate && gunicorn todo_api.wsgi:application --bind 0.0.0.0:8000"
+    volumes:
+      - .:/app
+      - static_volume:/app/staticfiles
+      - logs_volume:/app/logs
+    ports:
+      - "8000:8000"
+    environment:
+      - DEBUG=False
+      - DATABASE_URL=sqlite:///db.sqlite3
+      - DJANGO_LOG_LEVEL=INFO
+    depends_on:
+      - db
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8000/api/todos/"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 40s
+
+  db:
+    image: postgres:15-alpine
+    container_name: todo_api_db
+    environment:
+      - POSTGRES_DB=todo_api
+      - POSTGRES_USER=todouser
+      - POSTGRES_PASSWORD=todopass
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    ports:
+      - "5432:5432"
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U todouser"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+volumes:
+  postgres_data: {}
+  static_volume: {}
+  logs_volume: {}

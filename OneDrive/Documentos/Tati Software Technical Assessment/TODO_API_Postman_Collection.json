@@ -1,0 +1,157 @@
+{
+  "info": {
+    "_postman_id": "todo-api-collection",
+    "name": "Django REST Framework TODO API",
+    "description": "Complete REST API collection for TODO management with full CRUD operations",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "item": [
+    {
+      "name": "Create TODO",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"title\": \"Buy groceries\",\n  \"description\": \"Milk, eggs, bread\",\n  \"is_completed\": false\n}"
+        },
+        "url": {
+          "raw": "{{base_url}}/todos/",
+          "host": ["{{base_url}}"],
+          "path": ["todos", ""]
+        },
+        "description": "Create a new TODO item"
+      },
+      "response": []
+    },
+    {
+      "name": "List All TODOs",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "{{base_url}}/todos/",
+          "host": ["{{base_url}}"],
+          "path": ["todos", ""]
+        },
+        "description": "Retrieve all TODO items with pagination"
+      },
+      "response": []
+    },
+    {
+      "name": "Get Single TODO",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "{{base_url}}/todos/1/",
+          "host": ["{{base_url}}"],
+          "path": ["todos", "1", ""]
+        },
+        "description": "Retrieve a single TODO item by ID"
+      },
+      "response": []
+    },
+    {
+      "name": "Update TODO (Full)",
+      "request": {
+        "method": "PUT",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"title\": \"Updated Title\",\n  \"description\": \"Updated description\",\n  \"is_completed\": true\n}"
+        },
+        "url": {
+          "raw": "{{base_url}}/todos/1/",
+          "host": ["{{base_url}}"],
+          "path": ["todos", "1", ""]
+        },
+        "description": "Fully update a TODO item (all fields required)"
+      },
+      "response": []
+    },
+    {
+      "name": "Partial Update TODO",
+      "request": {
+        "method": "PATCH",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"is_completed\": true\n}"
+        },
+        "url": {
+          "raw": "{{base_url}}/todos/1/",
+          "host": ["{{base_url}}"],
+          "path": ["todos", "1", ""]
+        },
+        "description": "Partially update a TODO item (update specific fields)"
+      },
+      "response": []
+    },
+    {
+      "name": "Delete TODO",
+      "request": {
+        "method": "DELETE",
+        "header": [],
+        "url": {
+          "raw": "{{base_url}}/todos/1/",
+          "host": ["{{base_url}}"],
+          "path": ["todos", "1", ""]
+        },
+        "description": "Delete a TODO item"
+      },
+      "response": []
+    },
+    {
+      "name": "Get Completed TODOs",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "{{base_url}}/todos/completed/",
+          "host": ["{{base_url}}"],
+          "path": ["todos", "completed", ""]
+        },
+        "description": "Retrieve all completed TODO items"
+      },
+      "response": []
+    },
+    {
+      "name": "Get Pending TODOs",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "{{base_url}}/todos/pending/",
+          "host": ["{{base_url}}"],
+          "path": ["todos", "pending", ""]
+        },
+        "description": "Retrieve all pending (incomplete) TODO items"
+      },
+      "response": []
+    }
+  ],
+  "variable": [
+    {
+      "key": "base_url",
+      "value": "http://localhost:8000/api",
+      "type": "string",
+      "description": "Base URL for the TODO API"
+    }
+  ]
+}
