@@ -22,7 +22,7 @@ python manage.py collectstatic --noinput || true
 # Create superuser non-interactively if env vars provided
 if [ -n "$ADMIN_USERNAME" ] && [ -n "$ADMIN_EMAIL" ] && [ -n "$ADMIN_PASSWORD" ]; then
   echo "Ensuring superuser $ADMIN_USERNAME exists"
-  python - <<PY
+  python manage.py shell <<PY
 from django.contrib.auth import get_user_model
 User = get_user_model()
 username = "$ADMIN_USERNAME"
