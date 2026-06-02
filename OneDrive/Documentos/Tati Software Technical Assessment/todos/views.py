@@ -3,6 +3,7 @@ API views for Todo CRUD operations.
 """
 import logging
 from rest_framework import viewsets, status
+from django.shortcuts import get_object_or_404
 from rest_framework.decorators import action
 from rest_framework.response import Response
 from .models import Todo
@@ -136,10 +137,11 @@ class TodoViewSet(viewsets.ModelViewSet):
         logger.info(f"Deleting todo with ID: {todo_id}")
 
         try:
-            response = super().destroy(request, *args, **kwargs)
+            instance = get_object_or_404(Todo, pk=todo_id)
+            instance.delete()
             logger.info(f"Successfully deleted todo ID {todo_id}")
-            return response
-        except Todo.DoesNotExist:
+            return Response(status=status.HTTP_204_NO_CONTENT)
+        except Exception:
             logger.warning(f"Todo with ID {todo_id} not found for delete")
             return Response(
                 {"detail": "Todo not found"},
