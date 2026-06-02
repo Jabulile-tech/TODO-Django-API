@@ -34,7 +34,7 @@ ENV PATH=/root/.local/bin:$PATH \
 COPY . .
 
 # Make build scripts executable
-RUN chmod +x /app/manage.py /app/render-build.sh
+RUN chmod +x /app/manage.py /app/render-build.sh /app/manage_start.sh
 
 # Create directories for logs and static files
 RUN mkdir -p logs staticfiles
@@ -46,6 +46,5 @@ EXPOSE 8000
 HEALTHCHECK --interval=30s --timeout=10s --start-period=40s --retries=3 \
     CMD python -c "import urllib.request; urllib.request.urlopen('http://localhost:8000/admin/').read()"
 
-# Default command - gunicorn for production
-# On Render, configure the start command in the dashboard
-CMD ["gunicorn", "todo_api.wsgi:application", "--bind", "0.0.0.0:8000", "--workers", "4", "--timeout", "60"]
+# Default command - use startup script to run migrations/collectstatic then gunicorn
+CMD ["/bin/bash","/app/manage_start.sh"]
